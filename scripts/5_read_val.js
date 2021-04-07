@@ -1,13 +1,11 @@
-const Oracle = artifacts.require("Oracle");
 const ATestnetConsumer = artifacts.require("ATestnetConsumer");
 require("dotenv").config();
 
 module.exports = async function (callback) {
   const con = await ATestnetConsumer.deployed();
-  await con.requestEthereumPrice(
-    (await Oracle.deployed()).address,
-    process.env.JOB_ID
-  );
+  console.log("changeDay: ", parseInt(await con.changeDay()));
+  console.log("currentPrice: ", parseInt(await con.currentPrice()));
+  console.log("lastMarket: ", await con.lastMarket());
 
   callback("\nFinished.");
 };

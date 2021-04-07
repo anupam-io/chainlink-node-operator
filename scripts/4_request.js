@@ -4,10 +4,12 @@ require("dotenv").config();
 
 module.exports = async function (callback) {
   const con = await ATestnetConsumer.deployed();
-  await con.requestEthereumPrice(
+  tx = await con.requestEthereumPrice(
     (await Oracle.deployed()).address,
     process.env.JOB_ID
   );
+
+  console.log(tx);
 
   callback("\nFinished.");
 };

@@ -43,7 +43,7 @@
     Account: 0x777C8cCaF12Bd4b11aB39B69c02D2dd00BF8a0EF
 
 
-    https://localhost:6688
+    http://localhost:6688/
 
     Deploy one `Oracle.sol`.
     Give permission to your node.
