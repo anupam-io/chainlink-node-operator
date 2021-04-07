@@ -4,13 +4,14 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
+    "compile": "truffle compile",
     "migrate": "truffle migrate --reset --network kovan",
-    "verify": "truffle run verify Oracle ATestnetConsumer --network kovan --license MIT"
+    "verify": "truffle run verify Oracle ATestnetConsumer --network kovan --license MIT",
+    "check": "node main.js"
   },
   "dependencies": {
     "@chainlink/contracts": "^0.1.7",
     "@truffle/hdwallet-provider": "^1.2.6",
-    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "pg": "^8.5.1",
     "truffle-plugin-verify": "^0.5.7",

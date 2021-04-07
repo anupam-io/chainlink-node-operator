@@ -99,6 +99,8 @@ DATABASE_TIMEOUT=0
  - `truffle exec scripts/4_request.js --network kovan`
  - `truffle exec scripts/5_read_val.js --network kovan`
 
+ - `node main.js`: Check postgres connection & NODE funds 
+
 ## Deployed contracts
  - [Oracle.sol](https://kovan.etherscan.io/address/0x63a7E202B1e0d76C576841fB91E6dB0D03D95a0F)
  - [ATestnetConsumer.sol](https://kovan.etherscan.io/address/0x3D07b397734D638906db75859eb97949C9402f72)

@@ -90,7 +90,7 @@ contract ATestnetConsumer is ChainlinkClient, Ownable {
   {
     emit RequestEthereumLastMarket(_requestId, _market);
     lastMarket = _market;
-  }067dc335be9c4e0a80240fccec9a4aa4
+  }
 
   function getChainlinkToken() public view returns (address) {
     return chainlinkTokenAddress();
