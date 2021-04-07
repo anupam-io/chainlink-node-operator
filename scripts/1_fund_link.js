@@ -15,12 +15,12 @@ module.exports = async function (callback) {
   tx = await link.methods
     .transfer((await Oracle.deployed()).address, amount)
     .send({ from: acc[0] });
-  console.log(tx.gasUsed);
+  console.log("gasUsed: ", tx.gasUsed);
 
   tx = await link.methods
     .transfer((await ATestnetConsumer.deployed()).address, amount)
     .send({ from: acc[0] });
-  console.log(tx.gasUsed);
+  console.log("gasUsed: ", tx.gasUsed);
 
   callback("\nFinished.");
 };

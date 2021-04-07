@@ -1,0 +1,42 @@
+{
+    "name": "",
+    "initiators": [
+      {
+        "type": "runlog",
+        "params": {
+          "address": "0x63a7e202b1e0d76c576841fb91e6db0d03d95a0f"
+        }
+      }
+    ],
+    "tasks": [
+      {
+        "type": "httpget",
+        "confirmations": 0,
+        "params": {
+          "get": "https://bitstamp.net/api/ticker/"
+        }
+      },
+      {
+        "type": "jsonparse",
+        "params": {
+          "path": [
+            "last"
+          ]
+        }
+      },
+      {
+        "type": "multiply",
+        "params": {
+          "times": 100
+        }
+      },
+      {
+        "type": "ethuint256"
+      },
+      {
+        "type": "ethtx"
+      }
+    ],
+    "startAt": "2020-02-09T15:13:03Z"
+  }
+  
