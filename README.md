@@ -66,10 +66,10 @@ DATABASE_TIMEOUT=0
 ## How to run?
 
 - Assuming that you have successfully setup the chainlink node.
-- Add a new job from the NODE UI, with [job spec](https://docs.chain.link/docs/job-specifications#config) from: `job_specs/ethuint256.json`
 
 - `truffle compile`
 - `truffle migrate --reset --network kovan`
+- Add a new job from the NODE UI, with [job spec](https://docs.chain.link/docs/job-specifications#config) from: `job_specs/ethuint256.json` & **don't forget to copy Oracle address into job_spec**
 - `truffle verify Oracle ATestnetConsumer --network kovan --license MIT`
 - `truffle exec scripts/1_fund_link.js --network kovan`
 - `truffle exec scripts/2_add_permission.js --network kovan`
