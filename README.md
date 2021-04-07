@@ -1,3 +1,7 @@
+## Resources
+ - https://docs.chain.link/docs/running-a-chainlink-node
+ - https://docs.chain.link/docs/fulfilling-requests
+
 ## Setting up the `.env` file
     mkdir ~/.chainlink-kovan
     touch .env
@@ -49,3 +53,5 @@
     Oracle: https://kovan.etherscan.io/address/0x63a7E202B1e0d76C576841fB91E6dB0D03D95a0F#writeContract
     ATestnetConsumer: https://kovan.etherscan.io/address/0x3D07b397734D638906db75859eb97949C9402f72#contracts
     
+
+

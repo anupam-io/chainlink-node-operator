@@ -10,6 +10,7 @@
   "dependencies": {
     "@chainlink/contracts": "^0.1.7",
     "@truffle/hdwallet-provider": "^1.2.6",
+    "axios": "^0.21.1",
     "dotenv": "^8.2.0",
     "pg": "^8.5.1",
     "truffle-plugin-verify": "^0.5.7",

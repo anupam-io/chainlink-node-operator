@@ -1,3 +1,4 @@
+const { default: axios } = require("axios");
 const { Client } = require("pg");
 const client = new Client({
   user: "postgres",
@@ -144,6 +145,7 @@ async function main() {
     "LINK BALANCE: ",
     await link.methods.balanceOf(process.env.NODE_ADDRESS).call()
   );
+
   return process.exit(0);
 }
 main();
