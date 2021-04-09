@@ -3,11 +3,11 @@
   "initiators": [{
     "type": "RunLog",
     "params": {
-      "address": "0x23fe945a86b022585401DB244Ba30aa44F2046b2"
+      "address": "0x4ea53e49ea563619554E6A966f0C25C6A318fbcd"
     }
   }],
   "tasks": [{
-      "type": "HTTPGet"
+      "type": "httpgetwithunrestrictednetworkaccess"
     },
     {
       "type": "JSONParse"

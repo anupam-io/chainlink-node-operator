@@ -71,10 +71,10 @@
 - Assuming that you have successfully setup the chainlink node.
 - `truffle compile`
 - `truffle migrate --reset --network kovan`
-- Add a new job from the NODE UI, with [job spec](https://docs.chain.link/docs/job-specifications#config) from: `job_specs/ethuint256.json` & **don't forget to copy Oracle address into job_spec**
 - `truffle verify Oracle ATestnetConsumer --network kovan --license MIT`
 - `truffle exec scripts/1_fund_link.js --network kovan`
 - `truffle exec scripts/2_add_permission.js --network kovan`
+- Add a new job from the NODE UI, with [job spec](https://docs.chain.link/docs/job-specifications#config) from: `job_specs/ethuint256.json` & **don't forget to copy Oracle address into job_spec**
 - `truffle exec scripts/3_request.js --network kovan`
 - `truffle exec scripts/4_read_val.js --network kovan`
 
@@ -88,8 +88,8 @@
 yarn run v1.22.10
 $ truffle run verify Oracle APIConsumer --network kovan --license MIT
 Verifying Oracle
-Pass - Verified: https://kovan.etherscan.io/address/0x23fe945a86b022585401DB244Ba30aa44F2046b2#contracts
+Pass - Verified: https://kovan.etherscan.io/address/0x4ea53e49ea563619554E6A966f0C25C6A318fbcd#contracts
 Verifying APIConsumer
-Pass - Verified: https://kovan.etherscan.io/address/0x6f5374cf4800899a45A7dd6Cb135E428EF4b9278#contracts
+Pass - Verified: https://kovan.etherscan.io/address/0xFcd8986d32344384ee5f495b6026617d9Af07141#contracts
 Successfully verified 2 contract(s).
-Done in 28.65s.
+Done in 26.39s.

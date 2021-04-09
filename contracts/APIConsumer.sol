@@ -33,10 +33,10 @@ contract APIConsumer is ChainlinkClient, Ownable {
             );
         req.add(
             "get",
-            "https://min-api.cryptocompare.com/data/price?fsym=ETH&tsyms=USD"
+            "http://localhost:3000/code"
         );
-        req.add("path", "USD");
-        req.addInt("times", 10000);
+        req.add("path", "number");
+        req.addInt("times", 1000);
         sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
     }
 
