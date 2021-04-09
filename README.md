@@ -53,7 +53,6 @@
 ## Start the Chainlink Node
 ```
     cd ~/.chainlink-kovan
-
     docker run --name chainlink-kovan --network host -p 6688:6688 -v ~/.chainlink-kovan:/chainlink -it --env-file=.env smartcontract/chainlink:0.10.3 local n
 
     Visit: http://localhost:6688/
@@ -85,3 +84,12 @@
 
 ### [Oracle.sol](https://kovan.etherscan.io/address/0x63a7E202B1e0d76C576841fB91E6dB0D03D95a0F)
 ### [ATestnetConsumer.sol](https://kovan.etherscan.io/address/0x3D07b397734D638906db75859eb97949C9402f72)
+
+yarn run v1.22.10
+$ truffle run verify Oracle APIConsumer --network kovan --license MIT
+Verifying Oracle
+Pass - Verified: https://kovan.etherscan.io/address/0x23fe945a86b022585401DB244Ba30aa44F2046b2#contracts
+Verifying APIConsumer
+Pass - Verified: https://kovan.etherscan.io/address/0x6f5374cf4800899a45A7dd6Cb135E428EF4b9278#contracts
+Successfully verified 2 contract(s).
+Done in 28.65s.

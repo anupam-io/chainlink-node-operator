@@ -1,5 +1,5 @@
-const ATestnetConsumer = artifacts.require("ATestnetConsumer");
+const APIConsumer = artifacts.require("APIConsumer");
 
 module.exports = function (deployer) {
-  deployer.deploy(ATestnetConsumer);
+  deployer.deploy(APIConsumer);
 };

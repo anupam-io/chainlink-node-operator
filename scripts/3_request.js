@@ -1,9 +1,9 @@
 const Oracle = artifacts.require("Oracle");
-const ATestnetConsumer = artifacts.require("ATestnetConsumer");
+const APIConsumer = artifacts.require("APIConsumer");
 require("dotenv").config();
 
 module.exports = async function (callback) {
-  const con = await ATestnetConsumer.deployed();
+  const con = await APIConsumer.deployed();
 
   try {
     tx = await con.requestEthereumPrice(

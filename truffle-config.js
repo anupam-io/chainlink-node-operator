@@ -45,7 +45,7 @@ module.exports = {
           providerOrUrl: rpc_url,
         }),
       network_id: 42, // Any network (default: none)
-      skipDryRun: false, // Skip dry run before migrations? (default: false for public nets )
+      skipDryRun: true, // Skip dry run before migrations? (default: false for public nets )
     },
     // Useful for testing. The `development` name is special - truffle uses it by default
     // if it's defined here and no other network is specified at the command line.
