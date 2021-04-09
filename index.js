@@ -11,6 +11,3 @@ port = 3000;
 app.listen(port, () => {
   console.log(`Server started at http://localhost:${port}`);
 });
-
-
-`http://localhost:3000/code`

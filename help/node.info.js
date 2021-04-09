@@ -1,13 +1,3 @@
-const { default: axios } = require("axios");
-const { Client } = require("pg");
-const client = new Client({
-  user: "postgres",
-  host: "localhost",
-  database: "postgres",
-  password: "postgres",
-  port: 5432,
-});
-
 const ERC20ABI = [
   {
     constant: false,
@@ -131,13 +121,11 @@ const Web3 = require("web3");
 const web3 = new Web3(new Web3.providers.HttpProvider(process.env.RPC_URL));
 
 async function main() {
-  await client.connect();
-  console.log("Postgres connected well.");
   console.log(
     "ETH balance: ",
     await web3.eth.getBalance(process.env.NODE_ADDRESS)
   );
-  const link = await new web3.eth.Contract(
+  const link = new web3.eth.Contract(
     ERC20ABI,
     process.env.LINK_CONTRACT_ADDRESS
   );
