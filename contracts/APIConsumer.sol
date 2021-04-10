@@ -4,16 +4,16 @@ pragma solidity >=0.4.22 <0.9.0;
 import "@chainlink/contracts/src/v0.6/Oracle.sol";
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 import "@chainlink/contracts/src/v0.6/vendor/Ownable.sol";
-import "erc1155-nft-token-and-holder/contracts/TokenHolder.sol";
+import "./TokenHolder.sol";
 
 contract APIConsumer is ChainlinkClient, Ownable, TokenHolder {
     struct claimInfo {
         address claimant;
         string tokenSymbol;
     }
-
     uint256 private constant ORACLE_PAYMENT = 1 * LINK;
     mapping(bytes32 => claimInfo) public claimRecord;
+
 
     event RequestNFTClaimFullfilled(
         bytes32 indexed requestId,

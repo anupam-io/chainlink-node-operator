@@ -97,3 +97,21 @@ Done in 31.86s.
 # How to run local express server
  - `yarn server`: dev mode
  - `yarn start`: prod mode
+
+## Deployments
+yarn run v1.22.10
+$ truffle run verify Oracle APIConsumer Token --network kovan --license MIT
+Verifying Oracle
+Pass - Verified: https://kovan.etherscan.io/address/0x84773579603279a7F171ce9a14B26e3A3BCCE701#contracts
+Verifying APIConsumer
+Pass - Verified: https://kovan.etherscan.io/address/0x1Aa2b6F9B849a57B43Be400Dbc679740469fD89a#contracts
+Verifying Token
+Pass - Verified: https://kovan.etherscan.io/address/0x44A87eD9E244F4B8Bfa252369ea583F38a2a54D2#contracts
+Successfully verified 3 contract(s).
+Done in 36.39s.
+
+## Flow of deployement & minting
+ - We deploy Token
+ - APIConsumer+TokenHolder(Token.address)
+ - request()
+ - 
