@@ -5,47 +5,51 @@ import "@chainlink/contracts/src/v0.6/Oracle.sol";
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 import "@chainlink/contracts/src/v0.6/vendor/Ownable.sol";
 
+import "erc1155-nft-token-and-holder/contracts/TokenHolder.sol";
+
 contract APIConsumer is ChainlinkClient, Ownable {
     uint256 private constant ORACLE_PAYMENT = 1 * LINK;
+    address public tokenHolderAddr;
 
-    uint256 public currentPrice;
-    int256 public changeDay;
-    bytes32 public lastMarket;
-
-    event RequestEthereumPriceFulfilled(
+    event RequestNFTClaimFullfilled(
         bytes32 indexed requestId,
-        uint256 indexed price
+        bool indexed _result
     );
 
-    constructor() public Ownable() {
+    constructor(address _tokenHolderAddr) public Ownable() {
         setPublicChainlinkToken();
+        tokenHolderAddr = _tokenHolderAddr;
     }
 
-    function requestEthereumPrice(address _oracle, string memory _jobId)
-        public
-        onlyOwner
-    {
+    mapping(uint256 => mapping(address => string)) ledger;
+
+    function requestNFTClaim(
+        address _oracle,
+        string memory _jobId,
+        string memory _tokenSymbol
+    ) public onlyOwner {
         Chainlink.Request memory req =
             buildChainlinkRequest(
                 stringToBytes32(_jobId),
                 address(this),
                 this.fulfillEthereumPrice.selector
             );
-        req.add(
-            "get",
-            "http://localhost:3000/code"
-        );
+        req.add("get", "http://localhost:3000/nftclaim/:user/:pool/:uniq");
         req.add("path", "number");
         req.addInt("times", 1000);
-        sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
+        uint256 requestId =
+            sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
+        ledger[requestId][msg.sender] = _tokenSymbol;
     }
 
-    function fulfillEthereumPrice(bytes32 _requestId, uint256 _price)
+    function fulfillNFTClaim(bytes32 _requestId, bool _result)
         public
         recordChainlinkFulfillment(_requestId)
     {
-        emit RequestEthereumPriceFulfilled(_requestId, _price);
-        currentPrice = _price;
+        if (_result) {
+            emit RequestNFTClaimFullfilled(_requestId, _result);
+            TokenHolder(tokenHolderAddr).rewardNFT();
+        }
     }
 
     function stringToBytes32(string memory source)

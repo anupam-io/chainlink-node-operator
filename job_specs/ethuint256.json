@@ -1,22 +1,22 @@
 {
-  "name": "LastJob003",
-  "initiators": [{
-    "type": "RunLog",
-    "params": {
-      "address": "0x4ea53e49ea563619554E6A966f0C25C6A318fbcd"
+  "name": "Testjob9",
+  "initiators": [
+    {
+      "type": "RunLog",
+      "params": {
+        "address": "0x4ea53e49ea563619554E6A966f0C25C6A318fbcd"
+      }
     }
-  }],
-  "tasks": [{
-      "type": "httpgetwithunrestrictednetworkaccess"
+  ],
+  "tasks": [
+    {
+      "type": "HTTPGet"
     },
     {
       "type": "JSONParse"
     },
     {
-      "type": "Multiply"
-    },
-    {
-      "type": "EthUint256"
+      "type": "ethbool"
     },
     {
       "type": "EthTx"
