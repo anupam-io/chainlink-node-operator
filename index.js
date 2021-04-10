@@ -5,17 +5,15 @@ var cors = require('cors');
 const app = express();
 
 app.use(express.static('public'))
-
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-
 app.use(cors({credentials: true, origin: true})); // Use this after the variable declaration
 
 app.get("/status", (req, res) => {
   res.send({ status: "OK" });
 });
 
-// Click this for testing: http://localhost:3000/check/nft/0xcfdf8fffaa4dd7d777d448cf93dd01a45e97d782/LINK
+// Click this for testing: http://localhost:5000/check/nft/0xcfdf8fffaa4dd7d777d448cf93dd01a45e97d782/LINK
 app.get("/check/nft/:user/:tokenSymbol", async (req, res) => {
   const user = req.params.user;
   const tokenSymbol = req.params.tokenSymbol;
@@ -42,8 +40,6 @@ app.get("/check/nft/:user/:tokenSymbol", async (req, res) => {
   res.send({ result: returnStatus });
 });
 
-
-const port = 3000;
-app.listen(port, () => {
-  console.log(`Server started at http://localhost:${port}`);
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`Server started at http://localhost:${5000}`);
 });
