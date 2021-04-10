@@ -1,7 +1,15 @@
 const express = require("express");
 const assert = require("assert");
 const axios = require("axios");
+var cors = require('cors');
 const app = express();
+
+app.use(express.static('public'))
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+app.use(cors({credentials: true, origin: true})); // Use this after the variable declaration
 
 app.get("/status", (req, res) => {
   res.send({ status: "OK" });
