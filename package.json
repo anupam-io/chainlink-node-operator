@@ -6,7 +6,7 @@
   "scripts": {
     "compile": "truffle compile",
     "migrate": "truffle migrate --reset --network kovan",
-    "verify": "truffle run verify Oracle APIConsumer --network kovan --license MIT",
+    "verify": "truffle run verify Oracle APIConsumer Token --network kovan --license MIT",
     "status": "node help/node.info.js && node help/postgres.check.js && node help/query.js",
     "server": "nodemon index.js",
     "start": "nodemon index.js"

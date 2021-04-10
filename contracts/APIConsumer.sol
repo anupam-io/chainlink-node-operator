@@ -4,54 +4,85 @@ pragma solidity >=0.4.22 <0.9.0;
 import "@chainlink/contracts/src/v0.6/Oracle.sol";
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 import "@chainlink/contracts/src/v0.6/vendor/Ownable.sol";
-
 import "erc1155-nft-token-and-holder/contracts/TokenHolder.sol";
 
-contract APIConsumer is ChainlinkClient, Ownable {
+contract APIConsumer is ChainlinkClient, Ownable, TokenHolder {
+    struct claimInfo {
+        address claimant;
+        string tokenSymbol;
+    }
+
     uint256 private constant ORACLE_PAYMENT = 1 * LINK;
-    address public tokenHolderAddr;
+    mapping(bytes32 => claimInfo) public claimRecord;
 
     event RequestNFTClaimFullfilled(
         bytes32 indexed requestId,
-        bool indexed _result
+        bool indexed _result,
+        address winner
     );
 
-    constructor(address _tokenHolderAddr) public Ownable() {
+    /// @notice NODE is initialized, only NODE can invoke fulfillNFTClaim()
+    constructor(address _node, address _tokenAddr)
+        public
+        Ownable()
+        TokenHolder(_node, _tokenAddr)
+    {
         setPublicChainlinkToken();
-        tokenHolderAddr = _tokenHolderAddr;
     }
 
-    mapping(uint256 => mapping(address => string)) ledger;
-
+    /// @notice NFT claim initiated by user
     function requestNFTClaim(
         address _oracle,
         string memory _jobId,
         string memory _tokenSymbol
     ) public onlyOwner {
+        require(
+            claims[msg.sender][_tokenSymbol] !=
+                tokenSymbolToCollectibleId[_tokenSymbol], // collectibleId of the token,
+            "NFT already claimed for the token symbol !"
+        );
+
         Chainlink.Request memory req =
             buildChainlinkRequest(
                 stringToBytes32(_jobId),
                 address(this),
-                this.fulfillEthereumPrice.selector
+                this.fulfillNFTClaim.selector
             );
-        req.add("get", "http://localhost:3000/nftclaim/:user/:pool/:uniq");
-        req.add("path", "number");
-        req.addInt("times", 1000);
-        uint256 requestId =
+
+        // Turned off for testing purposes
+        // req.add(
+        //     "get",
+        //     string(abi.encodePacked(abi.encodePacked(msg.sender), _tokenSymbol))
+        // );
+        req.add(
+            "get",
+            "https://immense-mesa-34535.herokuapp.com/check/nft/0xcfdf8fffaa4dd7d777d448cf93dd01a45e97d782/LINK"
+        );
+        req.add("path", "result");
+        bytes32 requestId =
             sendChainlinkRequestTo(_oracle, req, ORACLE_PAYMENT);
-        ledger[requestId][msg.sender] = _tokenSymbol;
+        claimRecord[requestId] = claimInfo(msg.sender, _tokenSymbol);
     }
 
+    /// @notice request fullfilled by NODE
     function fulfillNFTClaim(bytes32 _requestId, bool _result)
         public
         recordChainlinkFulfillment(_requestId)
     {
-        if (_result) {
-            emit RequestNFTClaimFullfilled(_requestId, _result);
-            TokenHolder(tokenHolderAddr).rewardNFT();
-        }
+        // if (_result) {
+        this.rewardNFT(
+            claimRecord[_requestId].tokenSymbol,
+            claimRecord[_requestId].claimant
+        );
+        emit RequestNFTClaimFullfilled(
+            _requestId,
+            _result,
+            claimRecord[_requestId].claimant
+        );
+        // }
     }
 
+    /// @notice helper funtion to convert string to bytes32
     function stringToBytes32(string memory source)
         private
         pure

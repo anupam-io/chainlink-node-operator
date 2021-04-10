@@ -1755,7 +1755,7 @@ entities@^2.0.0:
 
 "erc1155-nft-token-and-holder@https://github.com/chainGers-2021/ERC1155-holder-distributor.git":
   version "1.0.0"
-  resolved "https://github.com/chainGers-2021/ERC1155-holder-distributor.git#d74187e5e2730b3863e653ee825bb5f6270611c1"
+  resolved "https://github.com/chainGers-2021/ERC1155-holder-distributor.git#5ff869ea82ab9e0f809ce7c2239d565c1dc0002b"
   dependencies:
     "@chainlink/contracts" "^0.1.7"
     "@openzeppelin/contracts" "^3.4.1"
@@ -3695,9 +3695,9 @@ pgpass@1.x:
     split2 "^3.1.1"
 
 picomatch@^2.0.4, picomatch@^2.2.1:
-  version "2.2.2"
-  resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.2.tgz#21f333e9b6b8eaff02468f5146ea406d345f4dad"
-  integrity sha512-q0M/9eZHzmr0AulXyPwNfZjtwZ/RBZlbN3K3CErVrk50T2ASYI7Bye0EvekFY3IP1Nt2DHu0re+V2ZHIpMkuWg==
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/picomatch/-/picomatch-2.2.3.tgz#465547f359ccc206d3c48e46a1bcb89bf7ee619d"
+  integrity sha512-KpELjfwcCDUb9PeigTs2mBJzXUPzAuP2oPcA989He8Rte0+YUAjw1JVedDhuTKPkHjSYzMN3npC9luThGYEKdg==
 
 pify@^3.0.0:
   version "3.0.0"
