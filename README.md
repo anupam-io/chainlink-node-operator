@@ -1,18 +1,14 @@
-# Setting up a chainlink node, deploying an oracle, making a request in a smart contract
-
-## Resources
-
-- https://docs.chain.link/docs/running-a-chainlink-node
-- https://docs.chain.link/docs/fulfilling-requests
-- https://docs.chain.link/docs/job-specifications#config
+# **How to setup chainlink node**
 
 ## Setting up the `.env` file
+
 ```
     mkdir ~/.chainlink-kovan
     touch .env
 ```
 
 - Put this inside your `~/.chainlink-kovan/.env` file:
+
 ```
     ROOT=/chainlink
     LOG_LEVEL=debug
@@ -27,14 +23,15 @@
 ```
 
 ## Set the local `postgres` DATABASE_URL Config
-```
 
+```
     sudo -i -u postgres
     psql
     ALTER USER postgres PASSWORD '12345678'
 ```
 
- - Postges setup:
+- Postges setup:
+
 ```
     username: postgres
     password: postgres
@@ -50,7 +47,14 @@
     DATABASE_TIMEOUT=0
 ```
 
-## Start the Chainlink Node
+## Resources
+
+- https://docs.chain.link/docs/running-a-chainlink-node
+- https://docs.chain.link/docs/fulfilling-requests
+- https://docs.chain.link/docs/job-specifications#config
+
+# **How to start chainlink node?**
+
 ```
     cd ~/.chainlink-kovan
     docker run --name chainlink-kovan --network host -p 6688:6688 -v ~/.chainlink-kovan:/chainlink -it --env-file=.env smartcontract/chainlink:0.10.3 local n
@@ -66,52 +70,81 @@
 
 - `docker network ls`: make sure host is there.
 
-## How to run?
+## Screenshots
+ - <img src="./help/1.png" width="800" />
+ - <img src="./help/3.png" width="800" />
+ - <img src="./help/2.png" width="800" />
 
+# **How to deploy APIConsumer**
 - Assuming that you have successfully setup the chainlink node.
 - `truffle compile`
-- `truffle migrate --reset --network kovan`
-- `truffle verify Oracle ATestnetConsumer --network kovan --license MIT`
+- `truffle migrate --reset --network kovan`/`truffle migrate --f 3 --network kovan`(If you update APIConsumer only.)
+- `yarn verify`
 - `truffle exec scripts/1_fund_link.js --network kovan`
-- `truffle exec scripts/2_add_permission.js --network kovan`
-- Add a new job from the NODE UI, with [job spec](https://docs.chain.link/docs/job-specifications#config) from: `job_specs/ethuint256.json` & **don't forget to copy Oracle address into job_spec**
+- Needs to be done for the first time:
+
+  - `truffle exec scripts/2_add_permission.js --network kovan`
+  - Add a new job from the NODE UI, with [job spec](https://docs.chain.link/docs/job-specifications#config) from: `job_specs/eth=>bool.json` & **don't forget to copy Oracle address into job_spec**
+
 - `truffle exec scripts/3_request.js --network kovan`
 - `truffle exec scripts/4_read_val.js --network kovan`
 
 - `node main.js`: Check postgres connection & NODE funds
 
-## Deployed contracts
+## Directory structure
 
-### [Oracle.sol](https://kovan.etherscan.io/address/0x63a7E202B1e0d76C576841fB91E6dB0D03D95a0F)
-### [ATestnetConsumer.sol](https://kovan.etherscan.io/address/0x3D07b397734D638906db75859eb97949C9402f72)
+```
+pam@g3:~/cl-node$ tree -I 'node_modules|build'
+.
+├── contracts
+│   ├── Distributor
+│   │   ├── APIConsumer.sol
+│   │   └── TokenHandler.sol
+│   ├── ERC1155
+│   │   └── Token.sol
+│   └── Migrations.sol
+├── help
+│   ├── node.info.js
+│   ├── postgres.check.js
+│   └── query.js
+├── index.js
+├── job_specs
+│   └── eth=>bool.json
+├── migrations
+│   ├── 1_initial_migration.js
+│   ├── 2_oracle.js
+│   ├── 3_token.js
+│   └── 4_testnet_consumer.js
+├── package.json
+├── README.md
+├── scripts
+│   ├── 1_fund_link.js
+│   ├── 2_add_permission.js
+│   ├── 3_request.js
+│   └── 4_read_val.js
+├── truffle-config.js
+└── yarn.lock
 
-yarn run v1.22.10
-$ truffle run verify Oracle APIConsumer --network kovan --license MIT
-Verifying Oracle
-Pass - Verified: https://kovan.etherscan.io/address/0x19F06EE9a7F93F52f003FD1DDD590B2dc19dE8e7#contracts
-Verifying APIConsumer
-Pass - Verified: https://kovan.etherscan.io/address/0xf232D971Dd3EaE7c492B9b6a9409105C0C054566#contracts
-Successfully verified 2 contract(s).
-Done in 31.86s.
-
-# How to run local express server
- - `yarn server`: dev mode
- - `yarn start`: prod mode
+7 directories, 21 files
+```
 
 ## Deployments
-yarn run v1.22.10
+
+```
 $ truffle run verify Oracle APIConsumer Token --network kovan --license MIT
 Verifying Oracle
-Pass - Verified: https://kovan.etherscan.io/address/0x84773579603279a7F171ce9a14B26e3A3BCCE701#contracts
+Contract source code already verified: https://kovan.etherscan.io/address/0xa4B3F31cED36617A454F660Be10B97456922cbE0#contracts
 Verifying APIConsumer
-Pass - Verified: https://kovan.etherscan.io/address/0x1Aa2b6F9B849a57B43Be400Dbc679740469fD89a#contracts
+Pass - Verified: https://kovan.etherscan.io/address/0xBdC3FcC0BEd515F09221dB7FA1B161052D8a3F23#contracts
 Verifying Token
-Pass - Verified: https://kovan.etherscan.io/address/0x44A87eD9E244F4B8Bfa252369ea583F38a2a54D2#contracts
+Pass - Verified: https://kovan.etherscan.io/address/0xFE96C2094A3dF1ec1B7C3d42B92Fe7DB6cFd4e66#contracts
 Successfully verified 3 contract(s).
-Done in 36.39s.
+Done in 29.99s.
+```
 
-## Flow of deployement & minting
- - We deploy Token
- - APIConsumer+TokenHolder(Token.address)
- - request()
- - 
+- [Node address: `0xBcabE53a3cd718bc48137831f6F788C8AB35D10a`](https://kovan.etherscan.io/address/0xBcabE53a3cd718bc48137831f6F788C8AB35D10a)
+- Job address: `68e165d25145484b9effc50925d09889`
+
+# **How to run local express server**
+- `yarn server`: Start in *dev* mode
+- `yarn start`: Start in *prod* mode

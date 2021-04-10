@@ -11,7 +11,7 @@ contract APIConsumer is ChainlinkClient, Ownable, TokenHandler {
         address claimant;
         string tokenSymbol;
     }
-    uint256 private constant ORACLE_PAYMENT = 1 * LINK;
+    uint256 private constant ORACLE_PAYMENT = LINK/10;
     mapping(bytes32 => claimInfo) public claimRecord;
 
     event RequestNFTClaimFullfilled(
@@ -21,7 +21,7 @@ contract APIConsumer is ChainlinkClient, Ownable, TokenHandler {
     );
 
     /// @notice NODE is initialized, only NODE can invoke fulfillNFTClaim()
-    constructor(address _tokenAddr)
+    constructor(address  _tokenAddr)
         public
         Ownable()
         TokenHandler(_tokenAddr)
