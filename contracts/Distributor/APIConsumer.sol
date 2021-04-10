@@ -4,16 +4,15 @@ pragma solidity >=0.4.22 <0.9.0;
 import "@chainlink/contracts/src/v0.6/Oracle.sol";
 import "@chainlink/contracts/src/v0.6/ChainlinkClient.sol";
 import "@chainlink/contracts/src/v0.6/vendor/Ownable.sol";
-import "./TokenHolder.sol";
+import "./TokenHandler.sol";
 
-contract APIConsumer is ChainlinkClient, Ownable, TokenHolder {
+contract APIConsumer is ChainlinkClient, Ownable, TokenHandler {
     struct claimInfo {
         address claimant;
         string tokenSymbol;
     }
     uint256 private constant ORACLE_PAYMENT = 1 * LINK;
     mapping(bytes32 => claimInfo) public claimRecord;
-
 
     event RequestNFTClaimFullfilled(
         bytes32 indexed requestId,
@@ -22,10 +21,10 @@ contract APIConsumer is ChainlinkClient, Ownable, TokenHolder {
     );
 
     /// @notice NODE is initialized, only NODE can invoke fulfillNFTClaim()
-    constructor(address _node, address _tokenAddr)
+    constructor(address _tokenAddr)
         public
         Ownable()
-        TokenHolder(_node, _tokenAddr)
+        TokenHandler(_tokenAddr)
     {
         setPublicChainlinkToken();
     }
@@ -70,7 +69,7 @@ contract APIConsumer is ChainlinkClient, Ownable, TokenHolder {
         recordChainlinkFulfillment(_requestId)
     {
         // if (_result) {
-        this.rewardNFT(
+        rewardNFT(
             claimRecord[_requestId].tokenSymbol,
             claimRecord[_requestId].claimant
         );
